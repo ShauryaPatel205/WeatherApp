@@ -7,52 +7,136 @@
     font-family: "Poppins", sans-serif;
 }
 
+/* 🌦 LIVE BACKGROUND */
+#weather-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(#87CEEB, #1E90FF);
+    transition: 0.8s ease;
+    overflow: hidden;
+}
+
+/* SUN */
+.sun {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #ffd700, #ff9800);
+    border-radius: 50%;
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    box-shadow: 0 0 80px rgba(255,215,0,.7);
+    display: none;
+    animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+    50% { transform: scale(1.05); }
+}
+
+/* CLOUDS */
+.cloud {
+    position: absolute;
+    top: 100px;
+    width: 220px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50px;
+    opacity: .8;
+    display: none;
+    animation: moveClouds 60s linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: #fff;
+    width: 100px;
+    height: 80px;
+    top: -40px;
+    border-radius: 50%;
+}
+
+.cloud::before { left: 20px; }
+.cloud::after { right: 20px; }
+
+.cloud1 { left: -250px; }
+.cloud2 { top: 180px; left: -300px; animation-duration: 80s; }
+
+@keyframes moveClouds {
+    to { transform: translateX(140vw); }
+}
+
+/* RAIN */
+.rain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        transparent,
+        transparent 6px,
+        rgba(255,255,255,.4) 7px
+    );
+    animation: rain 0.4s linear infinite;
+}
+
+@keyframes rain {
+    to { transform: translateY(100%); }
+}
+
+.rain { display: none; }
+
+/* SNOW */
+.snow::before {
+    content: "❄ ❅ ❄ ❅ ❄ ❅";
+    font-size: 2rem;
+    position: absolute;
+    width: 100%;
+    animation: snow 8s linear infinite;
+}
+
+@keyframes snow {
+    to { transform: translateY(110%); }
+}
+
+.snow { display: none; }
+
+/* THUNDER */
+.thunder {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.8);
+    opacity: 0;
+    animation: flash 6s infinite;
+    display: none;
+}
+
+@keyframes flash {
+    96% { opacity: 1; }
+}
+
+/* APP UI */
 body {
-    background: linear-gradient(to bottom, #87CEEB, #1E90FF);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     padding: 20px;
-    transition: 0.4s;
-}
-
-body.dark {
-    background: linear-gradient(#2c3e50, #000428);
-    color: white;
 }
 
 .app-container {
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,.3);
     padding: 25px;
     border-radius: 30px;
     width: 500px;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(18px);
+    z-index: 2;
 }
 
 .title-glass {
     text-align: center;
     font-size: 44px;
-}
-
-/* 🔥 PREMIUM FLOATING BUTTON */
-.portfolio-btn {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    padding: 14px 22px;
-    background: linear-gradient(135deg, #ff512f, #dd2476);
-    color: white;
-    font-weight: 600;
-    border-radius: 40px;
-    text-decoration: none;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    transition: 0.3s ease;
-    z-index: 99999;
-}
-
-.portfolio-btn:hover {
-    transform: scale(1.15);
-    box-shadow: 0 0 25px rgba(255,255,255,0.9);
 }
 
 /* PARTICLES */
@@ -61,7 +145,7 @@ body.dark {
     top: -40px;
     pointer-events: none;
     animation: fall linear forwards;
-    z-index: 999999;
+    z-index: 9999;
 }
 
 @keyframes fall {
@@ -69,4 +153,18 @@ body.dark {
         transform: translateY(110vh) rotate(360deg);
         opacity: 0;
     }
+}
+
+/* PORTFOLIO BUTTON */
+.portfolio-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    padding: 14px 22px;
+    background: linear-gradient(135deg,#ff512f,#dd2476);
+    color: #fff;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 99999;
 }
